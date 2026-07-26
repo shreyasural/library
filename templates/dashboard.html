@@ -1,0 +1,407 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Dashboard</title>
+
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background-image:url("{% static 'images/issuebook.jpg' %}");
+        background-size:cover;
+        background-position:center;
+        background-repeat:no-repeat;
+        min-height:100vh;
+    }
+
+    .overlay{
+        background:rgba(0,0,0,0.55);
+        min-height:100vh;
+        padding:20px;
+    }
+
+    /* ---------------- Header ---------------- */
+
+    .header{
+        position:relative;
+        text-align:center;
+        margin-bottom:25px;
+    }
+
+    h1{
+        color:white;
+        font-size:38px;
+        margin-bottom:10px;
+    }
+
+    h3{
+        color:#f8f8f8;
+        font-size:20px;
+        font-weight:normal;
+    }
+
+    /* ---------------- Notification Bell ---------------- */
+
+    .notification-container{
+        position:absolute;
+        right:25px;
+        top:5px;
+    }
+
+    #fine-toggle{
+        display:none;
+    }
+
+    .notification-btn{
+        position:relative;
+        display:block;
+        width:52px;
+        height:52px;
+        line-height:52px;
+        text-align:center;
+        background:rgba(255,255,255,.95);
+        border-radius:50%;
+        font-size:27px;
+        cursor:pointer;
+        box-shadow:0 4px 10px rgba(0,0,0,.3);
+        transition:.3s;
+    }
+
+    .notification-btn:hover{
+        transform:scale(1.1);
+        background:#FFD700;
+    }
+
+    .notification-dot{
+        position:absolute;
+        top:7px;
+        right:7px;
+        width:11px;
+        height:11px;
+        background:#dc3545;
+        border-radius:50%;
+        border:2px solid white;
+    }
+
+    /* ---------------- Fine Alert ---------------- */
+
+    .fine-alert-box{
+        display:none;
+        position:absolute;
+        right:0;
+        top:65px;
+        width:350px;
+        background:#fff3cd;
+        color:#856404;
+        border-left:6px solid #dc3545;
+        padding:20px;
+        border-radius:12px;
+        box-shadow:0 5px 20px rgba(0,0,0,.4);
+        z-index:1000;
+        text-align:left;
+    }
+
+    #fine-toggle:checked ~ .fine-alert-box{
+        display:block;
+    }
+
+    .fine-alert-box h2{
+        color:#dc3545;
+        margin-bottom:10px;
+        font-size:22px;
+    }
+
+    .fine-alert-box p{
+        font-size:15px;
+        margin-bottom:10px;
+        line-height:1.5;
+    }
+
+    .fine-alert-box ul{
+        margin-left:20px;
+    }
+
+    .fine-alert-box li{
+        margin:8px 0;
+        font-size:14px;
+    }
+
+    .alert-btn{
+        display:inline-block;
+        margin-top:12px;
+        padding:9px 16px;
+        background:#dc3545;
+        color:white;
+        text-decoration:none;
+        border-radius:8px;
+        font-weight:bold;
+        transition:.3s;
+    }
+
+    .alert-btn:hover{
+        background:#b52b27;
+    }
+
+    /* ---------------- Dashboard ---------------- */
+
+    .container{
+        width:1000px;
+        max-width:95%;
+        margin:auto;
+
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:20px;
+    }
+
+    .btn{
+        text-decoration:none;
+        background:rgba(255,255,255,.92);
+        color:#003366;
+        font-size:18px;
+        font-weight:bold;
+        text-align:center;
+        padding:18px;
+        border-radius:12px;
+        transition:.3s;
+        box-shadow:0 4px 10px rgba(0,0,0,.25);
+    }
+
+    .btn:hover{
+        background:#FFD700;
+        color:black;
+        transform:translateY(-4px);
+    }
+
+    /* ---------------- Logout ---------------- */
+
+    .logout{
+        display:block;
+        width:220px;
+        margin:35px auto 0;
+        text-align:center;
+        text-decoration:none;
+        background:#d9534f;
+        color:white;
+        padding:15px;
+        border-radius:10px;
+        font-size:20px;
+        font-weight:bold;
+        transition:.3s;
+    }
+
+    .logout:hover{
+        background:#b52b27;
+    }
+
+    /* ---------------- Responsive ---------------- */
+
+    @media(max-width:992px){
+
+        .container{
+            grid-template-columns:repeat(3,1fr);
+        }
+
+    }
+
+    @media(max-width:768px){
+
+        h1{
+            font-size:30px;
+        }
+
+        h3{
+            font-size:18px;
+        }
+
+        .container{
+            grid-template-columns:repeat(2,1fr);
+        }
+
+        .btn{
+            font-size:16px;
+            padding:16px;
+        }
+
+        .notification-container{
+            right:10px;
+        }
+
+    }
+
+    @media(max-width:500px){
+
+        .container{
+            grid-template-columns:1fr;
+        }
+
+        .logout{
+            width:180px;
+            font-size:18px;
+        }
+
+        .fine-alert-box{
+            width:280px;
+            right:-10px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+<!-- Header -->
+
+<div class="header">
+
+    <h1>📚 Library Dashboard</h1>
+
+    <h3>Welcome to the Library Management System</h3>
+
+
+    <!-- Notification Bell -->
+
+    <div class="notification-container">
+
+        <input type="checkbox" id="fine-toggle">
+
+        <label for="fine-toggle" class="notification-btn">
+
+            🔔
+
+            {% if overdue_books %}
+                <span class="notification-dot"></span>
+            {% endif %}
+
+        </label>
+
+
+        <!-- Fine Alert Popup -->
+
+        <div class="fine-alert-box">
+
+            {% if overdue_books %}
+
+                <h2>⚠ Fine Overdue Alert</h2>
+
+                <p>
+                    The following books have crossed the
+                    10-day borrowing period:
+                </p>
+
+                <ul>
+
+                    {% for book in overdue_books %}
+
+                    <li>
+
+                        <strong>{{ book.title }}</strong>
+
+                        issued to
+
+                        <strong>{{ book.student_name }}</strong>
+
+                        — Fine: ₹{{ book.fine }}
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+                <a href="{% url 'fine' %}" class="alert-btn">
+                    View Fine Details
+                </a>
+
+            {% else %}
+
+                <h2>✓ No Fine Alerts</h2>
+
+                <p>
+                    You currently have no overdue fines.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Dashboard Buttons -->
+
+<div class="container">
+
+    <a href="{% url 'add' %}" class="btn">
+        ➕ Add Book
+    </a>
+
+    <a href="{% url 'search' %}" class="btn">
+        🔍 Search Book
+    </a>
+
+    <a href="{% url 'issue' %}" class="btn">
+        📖 Issue Book
+    </a>
+
+    <a href="{% url 'return' %}" class="btn">
+        ↩ Return Book
+    </a>
+
+    <a href="{% url 'delete' %}" class="btn">
+        🗑 Delete Book
+    </a>
+
+    <a href="{% url 'viewbooks' %}" class="btn">
+        📚 View Books
+    </a>
+
+    <a href="{% url 'fine' %}" class="btn">
+        💰 Overdue Fine
+    </a>
+
+    <a href="{% url 'recommend' %}" class="btn">
+        📖 Book Recommendation
+    </a>
+
+    <a href="{% url 'popular_books' %}" class="btn">
+        🏆 Popular Books
+    </a>
+
+    <a href="{% url 'trending_categories' %}" class="btn">
+        📈 Trending Categories
+    </a>
+
+</div>
+
+
+<!-- Logout -->
+
+<a href="{% url 'logout' %}" class="logout">
+    🚪 Logout
+</a>
+
+</div>
+
+</body>
+
+</html>
