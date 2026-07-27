@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fine Calculator</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:url("{% static 'images/issuebook.jpg' %}") no-repeat center center/cover;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    background:rgba(255,255,255,0.95);
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+h2{
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:25px;
+    font-size:32px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+    padding:15px;
+    font-size:16px;
+}
+
+td{
+    padding:14px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f8f9fa;
+}
+
+tr:hover{
+    background:#e9f3ff;
+}
+
+.zero{
+    color:green;
+    font-weight:bold;
+}
+
+.fine{
+    color:red;
+    font-weight:bold;
+}
+
+.no-books{
+    color:red;
+    font-size:18px;
+    padding:20px;
+}
+
+.button-container{
+    text-align:center;
+    margin-top:30px;
+}
+
+.btn{
+    display:inline-block;
+    background:#0d6efd;
+    color:white;
+    text-decoration:none;
+    padding:12px 30px;
+    border-radius:8px;
+    font-size:17px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#084298;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>💰 Library Fine Calculator</h2>
+{% if overdue_exists %}
+<div class="alert">
+    ⚠ <strong>Fine Overdue!</strong> One or more books have crossed the 10-day borrowing period. Please return them and pay the applicable fine.
+</div>
+{% endif %}
+<table>
+
+<tr>
+    <th>Book ID</th>
+    <th>Book Title</th>
+    <th>Student Name</th>
+    <th>Student ID</th>
+    <th>Issue Date</th>
+    <th>Days Borrowed</th>
+    <th>Fine (₹)</th>
+</tr>
+
+{% for book in books %}
+
+<tr>
+
+<td>{{ book.book_id }}</td>
+
+<td>{{ book.title }}</td>
+
+<td>{{ book.student_name|default:"-" }}</td>
+
+<td>{{ book.student_id|default:"-" }}</td>
+
+<td>{{ book.issue_date|date:"d-m-Y"|default:"-" }}</td>
+
+<td>{{ book.days_borrowed }}</td>
+
+<td>
+
+{% if book.fine == 0 %}
+<span class="zero">₹0</span>
+{% else %}
+<span class="fine">₹{{ book.fine }}</span>
+{% endif %}
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="7" class="no-books">
+No issued books available.
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="button-container">
+
+<a href="{% url 'dashboard' %}" class="btn">
+← Back to Dashboard
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
