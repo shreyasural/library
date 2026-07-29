@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Recommendations</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background-image:url("{% static 'images/dashboard.jpg' %}");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+.overlay{
+    background:rgba(0,0,0,0.6);
+    min-height:100vh;
+    padding:40px;
+}
+
+.container{
+    width:80%;
+    margin:auto;
+    background:rgba(255,255,255,0.95);
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 0 15px rgba(0,0,0,0.4);
+}
+
+h1{
+    text-align:center;
+    color:#003366;
+    margin-bottom:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+    padding:15px;
+    font-size:18px;
+}
+
+td{
+    text-align:center;
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    font-size:17px;
+}
+
+tr:nth-child(even){
+    background:#f2f2f2;
+}
+
+tr:hover{
+    background:#dbe9ff;
+}
+
+.message{
+    text-align:center;
+    font-size:22px;
+    color:#555;
+    margin-top:40px;
+}
+
+.back-btn{
+    display:block;
+    width:220px;
+    margin:30px auto 0;
+    padding:15px;
+    background:#198754;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+    border-radius:30px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.back-btn:hover{
+    background:#146c43;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+<div class="container">
+
+<h1>📚 Recommended Books</h1>
+
+{% if books %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td>{{ book.book_id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.category }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+
+<div class="message">
+
+📖 No recommendations available yet.<br><br>
+
+Issue a few books to receive personalized recommendations based on your reading history.
+
+</div>
+
+{% endif %}
+
+<a href="/dashboard/" class="back-btn">⬅ Back to Dashboard</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
