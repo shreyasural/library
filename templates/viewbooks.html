@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>View Books</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:url("{% static 'images/issuebook.jpg' %}") no-repeat center center/cover;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+/* Main Container */
+
+.container{
+    width:100%;
+    max-width:1400px;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Heading */
+
+h2{
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:25px;
+    font-size:34px;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:10px;
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+    padding:14px;
+    font-size:16px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f8f9fa;
+}
+
+tr:hover{
+    background:#dceeff;
+    transition:0.3s;
+}
+
+/* Status */
+
+.available{
+    background:#28a745;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.issued{
+    background:#dc3545;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+/* QR Code */
+
+img{
+    width:65px;
+    height:65px;
+    border-radius:8px;
+    border:2px solid #0d6efd;
+}
+
+/* Empty Row */
+
+.no-books{
+    color:red;
+    font-size:18px;
+    padding:20px;
+}
+
+/* Button */
+
+.button-container{
+    margin-top:30px;
+    text-align:center;
+}
+
+.btn{
+    display:inline-block;
+    text-decoration:none;
+    background:#0d6efd;
+    color:white;
+    padding:12px 28px;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#084298;
+    transform:scale(1.05);
+}
+
+/* Responsive */
+
+@media(max-width:1000px){
+
+.container{
+    overflow-x:auto;
+}
+
+table{
+    min-width:1200px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📚 Library Book List</h2>
+
+<table>
+
+<tr>
+    <th>Book ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th>Status</th>
+    <th>Student Name</th>
+    <th>Student ID</th>
+    <th>Issue Date</th>
+    <th>Borrow Count</th>
+    <th>QR Code</th>
+</tr>
+
+{% for book in books %}
+
+<tr>
+
+<td>{{ book.book_id }}</td>
+
+<td>{{ book.title }}</td>
+
+<td>{{ book.author }}</td>
+
+<td>{{ book.category }}</td>
+
+<td>
+{% if book.status == "Available" %}
+<span class="available">Available</span>
+{% else %}
+<span class="issued">Issued</span>
+{% endif %}
+</td>
+
+<td>{{ book.student_name|default:"-" }}</td>
+
+<td>{{ book.student_id|default:"-" }}</td>
+
+<td>{{ book.issue_date|default:"-" }}</td>
+
+<td>{{ book.borrow_count }}</td>
+
+<td>
+<img src="{% url 'generate_qr' book.book_id %}" alt="QR Code">
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="10" class="no-books">
+No books available.
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="button-container">
+<a href="{% url 'dashboard' %}" class="btn">
+← Back to Dashboard
+</a>
+</div>
+
+</div>
+
+</body>
+</html>
