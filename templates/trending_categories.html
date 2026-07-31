@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trending Categories</title>
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family:Arial, Helvetica, sans-serif;
+            background-image:url("{% static 'images/home2.jpg' %}");
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+        }
+
+        .container{
+            width:70%;
+            margin:50px auto;
+            background:rgba(255,255,255,0.92);
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        h2{
+            text-align:center;
+            color:#0d6efd;
+            margin-bottom:25px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            table-layout:fixed;
+        }
+
+        th{
+            background:#0d6efd;
+            color:white;
+            padding:15px;
+            font-size:18px;
+        }
+
+        td{
+            padding:15px;
+            text-align:center;
+            border-bottom:1px solid #ddd;
+            font-size:17px;
+        }
+
+        tr:nth-child(even){
+            background:#f8f9fa;
+        }
+
+        tr:hover{
+            background:#e7f1ff;
+        }
+
+        .no-data{
+            text-align:center;
+            color:red;
+            font-size:18px;
+            margin-top:20px;
+        }
+
+        .button-container{
+            text-align:center;
+            margin-top:30px;
+        }
+
+        .btn{
+            display:inline-block;
+            padding:12px 25px;
+            background:#0d6efd;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-size:17px;
+        }
+
+        .btn:hover{
+            background:#084298;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>📈 Trending Categories</h2>
+
+    {% if categories %}
+
+    <table>
+
+        <tr>
+            <th>Rank</th>
+            <th>Category</th>
+            <th>Total Borrows</th>
+        </tr>
+
+        {% for category in categories %}
+
+        <tr>
+            <td><strong>{{ forloop.counter }}</strong></td>
+            <td>{{ category.category }}</td>
+            <td>{{ category.total_borrows }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+        <p class="no-data">No trending categories available.</p>
+
+    {% endif %}
+
+    <div class="button-container">
+        <a href="{% url 'dashboard' %}" class="btn">← Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
