@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI Library Assistant</title>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+        padding:30px;
+    }
+
+    .container{
+        width:100%;
+        max-width:800px;
+        background:rgba(255,255,255,0.12);
+        backdrop-filter:blur(16px);
+        border:1px solid rgba(255,255,255,0.25);
+        border-radius:24px;
+        padding:35px;
+        box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    .header{
+        text-align:center;
+        margin-bottom:30px;
+    }
+
+    .header h2{
+        color:#ffffff;
+        font-size:34px;
+        margin-bottom:10px;
+    }
+
+    .header p{
+        color:#dbeafe;
+        font-size:16px;
+        line-height:1.6;
+    }
+
+    .input-group{
+        display:flex;
+        gap:12px;
+        margin-bottom:25px;
+    }
+
+    input{
+        flex:1;
+        padding:16px 18px;
+        border:none;
+        outline:none;
+        border-radius:14px;
+        background:rgba(255,255,255,0.92);
+        font-size:16px;
+        color:#1e293b;
+    }
+
+    input::placeholder{
+        color:#64748b;
+    }
+
+    button{
+        padding:16px 28px;
+        border:none;
+        border-radius:14px;
+        background:linear-gradient(135deg,#2563eb,#1d4ed8);
+        color:white;
+        font-size:16px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:0.3s ease;
+    }
+
+    button:hover{
+        transform:translateY(-2px);
+    }
+
+    .response-box{
+        margin-top:15px;
+        background:rgba(255,255,255,0.15);
+        border:1px solid rgba(255,255,255,0.25);
+        border-radius:18px;
+        padding:22px;
+        min-height:140px;
+    }
+
+    .response-title{
+        color:#ffffff;
+        font-size:18px;
+        font-weight:bold;
+        margin-bottom:14px;
+    }
+
+    .answer{
+        color:#f8fafc;
+        line-height:1.8;
+        font-size:15px;
+        white-space:pre-wrap;
+    }
+
+    .bottom-dashboard{
+        text-align:center;
+        margin-top:30px;
+    }
+
+    .dashboard-btn{
+        display:inline-block;
+        text-decoration:none;
+        background:linear-gradient(135deg,#0f172a,#1e3a8a);
+        color:white;
+        padding:14px 30px;
+        border-radius:14px;
+        font-size:16px;
+        font-weight:bold;
+        box-shadow:0 8px 20px rgba(0,0,0,0.3);
+        transition:0.3s ease;
+    }
+
+    .dashboard-btn:hover{
+        transform:translateY(-2px);
+        background:linear-gradient(135deg,#1e293b,#2563eb);
+    }
+
+    .footer{
+        margin-top:25px;
+        text-align:center;
+        color:#bfdbfe;
+        font-size:14px;
+    }
+
+    @media(max-width:700px){
+        .container{
+            padding:24px;
+        }
+
+        .header h2{
+            font-size:28px;
+        }
+
+        .input-group{
+            flex-direction:column;
+        }
+
+        button{
+            width:100%;
+        }
+
+        .dashboard-btn{
+            width:100%;
+            text-align:center;
+        }
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+<div class="header">
+    <h2>🤖 AI Library Assistant</h2>
+    <p>
+        Ask questions about available books, categories, recommendations,
+        or library resources and receive intelligent responses instantly.
+    </p>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="input-group">
+        <input
+            type="text"
+            name="question"
+            value="{{ question }}"
+            placeholder="Ask about books, cloud computing, AI, Python, networking..."
+            required
+        >
+
+        <button type="submit">
+            Ask AI
+        </button>
+    </div>
+</form>
+
+<div class="response-box">
+    <div class="response-title">💬 AI Response</div>
+
+    {% if answer %}
+        <div class="answer">
+            {{ answer }}
+        </div>
+    {% else %}
+        <div class="answer">
+            Welcome! Ask a question such as:
+            - Find books related to cloud computing
+            - Do we have Python programming books?
+            - Suggest beginner books for AI
+            - Which networking books are available?
+        </div>
+    {% endif %}
+</div>
+
+<div class="bottom-dashboard">
+    <a href="{% url 'dashboard' %}" class="dashboard-btn">
+        ← Back to Dashboard
+    </a>
+</div>
+
+<div class="footer">
+    Library Management System • AI-Powered Student Assistant
+</div>
+
+</div>
+
+</body>
+</html>
