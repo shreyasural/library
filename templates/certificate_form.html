@@ -1,0 +1,272 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Library No Due Certificate</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body{
+        min-height:100vh;
+        background:linear-gradient(135deg,#0d3b66 0%,#1d5fa2 50%,#2a7bc4 100%);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:30px;
+    }
+
+    .container{
+        width:100%;
+        max-width:560px;
+        background:rgba(255,255,255,0.97);
+        border-radius:22px;
+        overflow:hidden;
+        box-shadow:0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .header{
+        background:#0d3b66;
+        color:#fff;
+        text-align:center;
+        padding:32px 26px;
+    }
+
+    .header h1{
+        font-size:30px;
+        margin-bottom:8px;
+        letter-spacing:0.5px;
+    }
+
+    .header p{
+        font-size:15px;
+        opacity:0.9;
+    }
+
+    .form-section{
+        padding:36px;
+    }
+
+    .form-title{
+        text-align:center;
+        margin-bottom:28px;
+    }
+
+    .form-title h2{
+        color:#0d3b66;
+        font-size:26px;
+        margin-bottom:6px;
+    }
+
+    .form-title p{
+        color:#666;
+        font-size:14px;
+        line-height:1.6;
+    }
+
+    .error-box{
+        background:#fdecea;
+        color:#b00020;
+        border:1px solid #f5c6cb;
+        border-left:5px solid #d32f2f;
+        padding:14px 16px;
+        border-radius:10px;
+        margin-bottom:22px;
+        font-weight:600;
+        text-align:center;
+    }
+
+    .form-group{
+        margin-bottom:22px;
+    }
+
+    label{
+        display:block;
+        font-weight:700;
+        color:#333;
+        margin-bottom:8px;
+        font-size:15px;
+    }
+
+    .input-box{
+        position:relative;
+    }
+
+    .input-box span{
+        position:absolute;
+        left:15px;
+        top:50%;
+        transform:translateY(-50%);
+        font-size:18px;
+        color:#0d3b66;
+    }
+
+    input, select{
+        width:100%;
+        padding:14px 14px 14px 48px;
+        border:1px solid #d1d5db;
+        border-radius:12px;
+        font-size:15px;
+        outline:none;
+        transition:0.25s ease;
+        background:#fff;
+    }
+
+    input:focus, select:focus{
+        border-color:#0d3b66;
+        box-shadow:0 0 0 4px rgba(13,59,102,0.12);
+    }
+
+    .btn{
+        width:100%;
+        padding:14px;
+        background:#0d3b66;
+        color:#fff;
+        border:none;
+        border-radius:12px;
+        font-size:16px;
+        font-weight:700;
+        cursor:pointer;
+        transition:0.25s ease;
+        margin-top:6px;
+    }
+
+    .btn:hover{
+        background:#092847;
+        transform:translateY(-1px);
+    }
+
+    .back-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        width:100%;
+        margin-top:16px;
+        padding:13px;
+        text-decoration:none;
+        border:2px solid #0d3b66;
+        border-radius:12px;
+        color:#0d3b66;
+        font-size:16px;
+        font-weight:700;
+        background:#fff;
+        transition:0.25s ease;
+    }
+
+    .back-btn:hover{
+        background:#0d3b66;
+        color:#fff;
+    }
+
+    .footer{
+        text-align:center;
+        padding:18px;
+        border-top:1px solid #e5e7eb;
+        color:#666;
+        font-size:13px;
+        background:#fafafa;
+    }
+
+    @media (max-width:640px){
+        .form-section{
+            padding:26px;
+        }
+
+        .header h1{
+            font-size:26px;
+        }
+
+        .form-title h2{
+            font-size:22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="header">
+    <h1>📚 College Library Management System</h1>
+    <p>Library Clearance / No Due Certificate Portal</p>
+</div>
+
+<div class="form-section">
+
+    <div class="form-title">
+        <h2>Generate No Due Certificate</h2>
+        <p>Enter the student details below. The system will verify the student record and ensure that there are no overdue fines before issuing the official Library No Due Certificate.</p>
+    </div>
+
+    {% if error %}
+    <div class="error-box">
+        ❌ {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Student Name</label>
+            <div class="input-box">
+                <span>👤</span>
+                <input type="text" name="student_name" value="{{ student_name|default:'' }}" placeholder="Enter full name" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Student ID</label>
+            <div class="input-box">
+                <span>🆔</span>
+                <input type="text" name="student_id" value="{{ student_id|default:'' }}" placeholder="Enter student ID" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Branch</label>
+            <div class="input-box">
+                <span>🎓</span>
+                <select name="branch" required>
+                    <option value="">Select Branch</option>
+                    <option value="Computer Science & Engineering" {% if branch == "Computer Science & Engineering" %}selected{% endif %}>Computer Science & Engineering</option>
+                    <option value="Information Technology" {% if branch == "Information Technology" %}selected{% endif %}>Information Technology</option>
+                    <option value="Electronics & Communication Engineering" {% if branch == "Electronics & Communication Engineering" %}selected{% endif %}>Electronics & Communication Engineering</option>
+                    <option value="Electrical Engineering" {% if branch == "Electrical Engineering" %}selected{% endif %}>Electrical Engineering</option>
+                    <option value="Mechanical Engineering" {% if branch == "Mechanical Engineering" %}selected{% endif %}>Mechanical Engineering</option>
+                    <option value="Civil Engineering" {% if branch == "Civil Engineering" %}selected{% endif %}>Civil Engineering</option>
+                    <option value="Artificial Intelligence & Machine Learning" {% if branch == "Artificial Intelligence & Machine Learning" %}selected{% endif %}>Artificial Intelligence & Machine Learning</option>
+                    <option value="Data Science" {% if branch == "Data Science" %}selected{% endif %}>Data Science</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">
+            📜 Generate Library No Due Certificate
+        </button>
+    </form>
+
+    <a href="{% url 'dashboard' %}" class="back-btn">
+        ⬅️ Back to Dashboard
+    </a>
+
+</div>
+
+<div class="footer">
+    Library Management System • Official Certificate Generation Module
+</div>
+
+</div>
+
+</body>
+</html>
