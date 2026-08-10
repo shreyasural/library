@@ -1,0 +1,327 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Clearance Pending</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body{
+        background:linear-gradient(135deg, #0d3b66, #1d5fa2);
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:30px;
+    }
+
+    .container{
+        width:100%;
+        max-width:760px;
+        background:#ffffff;
+        border-radius:20px;
+        overflow:hidden;
+        box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    .header{
+        background:#b00020;
+        color:white;
+        text-align:center;
+        padding:30px;
+    }
+
+    .header h1{
+        font-size:30px;
+        margin-bottom:8px;
+        letter-spacing:0.5px;
+    }
+
+    .header p{
+        font-size:15px;
+        opacity:0.95;
+    }
+
+    .content{
+        padding:35px;
+    }
+
+    .notice-box{
+        background:#fff4f4;
+        border-left:6px solid #d32f2f;
+        border-radius:12px;
+        padding:18px 20px;
+        margin-bottom:28px;
+    }
+
+    .notice-box h2{
+        color:#b00020;
+        font-size:22px;
+        margin-bottom:8px;
+    }
+
+    .notice-box p{
+        color:#444;
+        line-height:1.6;
+        font-size:15px;
+    }
+
+    .info-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:16px;
+        margin-bottom:26px;
+    }
+
+    .info-card{
+        background:#f8f9fb;
+        border:1px solid #e1e5eb;
+        border-radius:12px;
+        padding:16px;
+    }
+
+    .info-card .label{
+        color:#0d3b66;
+        font-weight:700;
+        font-size:14px;
+        margin-bottom:6px;
+    }
+
+    .info-card .value{
+        color:#222;
+        font-size:17px;
+        font-weight:600;
+    }
+
+    .fine-box{
+        background:#fff3e0;
+        border:1px solid #f0c36d;
+        border-radius:14px;
+        padding:22px;
+        text-align:center;
+        margin-bottom:30px;
+    }
+
+    .fine-box .title{
+        color:#8a4b00;
+        font-size:16px;
+        font-weight:700;
+        margin-bottom:10px;
+        text-transform:uppercase;
+        letter-spacing:0.5px;
+    }
+
+    .fine-box .amount{
+        font-size:36px;
+        color:#d32f2f;
+        font-weight:800;
+    }
+
+    .section-title{
+        color:#0d3b66;
+        font-size:22px;
+        margin-bottom:14px;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        overflow:hidden;
+        border-radius:12px;
+        margin-bottom:26px;
+    }
+
+    th{
+        background:#0d3b66;
+        color:white;
+        padding:14px;
+        text-align:left;
+        font-size:15px;
+    }
+
+    td{
+        padding:14px;
+        border-bottom:1px solid #e5e7eb;
+        background:#ffffff;
+    }
+
+    tr:nth-child(even) td{
+        background:#f9fafb;
+    }
+
+    .instruction{
+        background:#f8f9fb;
+        border:1px solid #e1e5eb;
+        border-radius:12px;
+        padding:18px;
+        color:#444;
+        line-height:1.7;
+        margin-bottom:28px;
+    }
+
+    .instruction strong{
+        color:#0d3b66;
+    }
+
+    .actions{
+        display:flex;
+        gap:14px;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        min-width:220px;
+        padding:13px 18px;
+        border-radius:10px;
+        text-decoration:none;
+        font-weight:700;
+        transition:0.3s ease;
+    }
+
+    .btn.primary{
+        background:#0d3b66;
+        color:white;
+    }
+
+    .btn.primary:hover{
+        background:#092847;
+    }
+
+    .btn.secondary{
+        background:white;
+        color:#0d3b66;
+        border:2px solid #0d3b66;
+    }
+
+    .btn.secondary:hover{
+        background:#0d3b66;
+        color:white;
+    }
+
+    .footer{
+        text-align:center;
+        padding:18px;
+        border-top:1px solid #e5e7eb;
+        color:#666;
+        font-size:13px;
+        background:#fafafa;
+    }
+
+    @media (max-width:640px){
+        .info-grid{
+            grid-template-columns:1fr;
+        }
+
+        .actions{
+            flex-direction:column;
+        }
+
+        .btn{
+            width:100%;
+        }
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+<div class="header">
+    <h1>❌ Library Clearance Pending</h1>
+    <p>College Library Management System • Clearance Verification Module</p>
+</div>
+
+<div class="content">
+
+    <div class="notice-box">
+        <h2>Certificate cannot be issued</h2>
+        <p>
+            The requested <strong>Library No Due Certificate</strong> cannot be generated because
+            the student has an outstanding overdue fine and/or pending library obligations.
+            Please clear all dues before requesting library clearance.
+        </p>
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-card">
+            <div class="label">Student Name</div>
+            <div class="value">{{ student_name }}</div>
+        </div>
+
+        <div class="info-card">
+            <div class="label">Student ID</div>
+            <div class="value">{{ student_id }}</div>
+        </div>
+
+        <div class="info-card">
+            <div class="label">Branch</div>
+            <div class="value">{{ branch }}</div>
+        </div>
+
+        <div class="info-card">
+            <div class="label">Certificate Status</div>
+            <div class="value">Pending</div>
+        </div>
+
+    </div>
+
+    <div class="fine-box">
+        <div class="title">Outstanding overdue fine</div>
+        <div class="amount">₹{{ total_fine }}</div>
+    </div>
+
+    <h3 class="section-title">Pending issued books</h3>
+
+    <table>
+        <tr>
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Issue Date</th>
+        </tr>
+
+        {% for book in books %}
+        <tr>
+            <td>{{ book.book_id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.issue_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="instruction">
+        <strong>Next step:</strong> The student must return all pending library books and
+        clear the overdue fine shown above. Once the outstanding amount becomes <strong>₹0</strong>,
+        the librarian can generate the official <strong>Library No Due Certificate</strong>.
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'no_due_certificate' %}" class="btn primary">⬅️ Back to Certificate Form</a>
+        <a href="{% url 'dashboard' %}" class="btn secondary">🏠 Return to Dashboard</a>
+    </div>
+
+</div>
+
+<div class="footer">
+    This page is generated by the College Library Management System and reflects the current library clearance status.
+</div>
+
+</div>
+
+</body>
+</html>
