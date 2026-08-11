@@ -1,0 +1,371 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library No Due Certificate</title>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        background:#e9edf3;
+        font-family:'Times New Roman', serif;
+        padding:30px;
+    }
+
+    .certificate{
+        width:900px;
+        margin:auto;
+        background:#fff;
+        position:relative;
+        padding:45px;
+        border:14px solid #0d3b66;
+        box-shadow:0 20px 45px rgba(0,0,0,0.18);
+    }
+
+    .certificate:before{
+        content:"";
+        position:absolute;
+        top:18px;
+        left:18px;
+        right:18px;
+        bottom:18px;
+        border:3px solid #d4af37;
+    }
+
+    .watermark{
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        font-size:120px;
+        color:rgba(13,59,102,0.05);
+        font-weight:bold;
+        letter-spacing:6px;
+        z-index:0;
+        white-space:nowrap;
+    }
+
+    .content-wrapper{
+        position:relative;
+        z-index:1;
+    }
+
+    .header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        border-bottom:2px solid #0d3b66;
+        padding-bottom:18px;
+        margin-bottom:25px;
+    }
+
+    .logo{
+        width:80px;
+        height:80px;
+        object-fit:contain;
+    }
+
+    .college-info{
+        text-align:center;
+        flex:1;
+    }
+
+    .college-info h1{
+        color:#0d3b66;
+        font-size:34px;
+        letter-spacing:1px;
+        margin-bottom:6px;
+    }
+
+    .college-info p{
+        color:#444;
+        font-size:15px;
+        line-height:1.5;
+    }
+
+    .certificate-title{
+        text-align:center;
+        margin:20px 0 28px;
+    }
+
+    .certificate-title h2{
+        color:#8b0000;
+        font-size:34px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+    }
+
+    .certificate-title .subtitle{
+        margin-top:8px;
+        color:#666;
+        font-size:15px;
+        letter-spacing:1px;
+    }
+
+    .meta{
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:28px;
+    }
+
+    .meta td{
+        border:1px solid #d9d9d9;
+        padding:12px 14px;
+        font-size:16px;
+    }
+
+    .meta td.label{
+        width:28%;
+        background:#f6f8fb;
+        color:#0d3b66;
+        font-weight:bold;
+    }
+
+    .content{
+        font-size:20px;
+        line-height:2;
+        text-align:justify;
+        color:#222;
+    }
+
+    .student-name{
+        color:#8b0000;
+        font-weight:bold;
+        font-size:22px;
+    }
+
+    .highlight{
+        color:#006400;
+        font-weight:bold;
+    }
+
+    .quote{
+        margin:26px 0;
+        padding:16px 20px;
+        border-left:4px solid #d4af37;
+        background:#faf8f0;
+        color:#555;
+        font-style:italic;
+        font-size:17px;
+    }
+
+    .signatures{
+        display:flex;
+        justify-content:space-between;
+        margin-top:70px;
+        gap:20px;
+    }
+
+    .sign-box{
+        width:30%;
+        text-align:center;
+    }
+
+    .line{
+        border-top:2px solid #000;
+        margin-bottom:10px;
+    }
+
+    .sign-box strong{
+        color:#0d3b66;
+        font-size:17px;
+    }
+
+    .verification{
+        margin-top:35px;
+        border-top:1px solid #cfcfcf;
+        padding-top:18px;
+        text-align:center;
+    }
+
+    .verification-text{
+        color:#555;
+        font-size:14px;
+        line-height:1.7;
+    }
+
+    .footer{
+        margin-top:22px;
+        text-align:center;
+        color:#666;
+        font-size:13px;
+    }
+
+    .actions{
+        width:900px;
+        margin:22px auto 0;
+        display:flex;
+        justify-content:center;
+        gap:14px;
+    }
+
+    .btn{
+        display:inline-block;
+        min-width:210px;
+        text-align:center;
+        background:#0d3b66;
+        color:#fff;
+        text-decoration:none;
+        padding:12px 18px;
+        border-radius:10px;
+        font-size:16px;
+        font-weight:bold;
+    }
+
+    .btn:hover{
+        background:#092847;
+    }
+
+    .btn.secondary{
+        background:#ffffff;
+        color:#0d3b66;
+        border:2px solid #0d3b66;
+    }
+
+    .btn.secondary:hover{
+        background:#0d3b66;
+        color:#ffffff;
+    }
+
+    @media print{
+        body{
+            background:#fff;
+            padding:0;
+        }
+
+        .certificate{
+            width:100%;
+            box-shadow:none;
+            border-width:10px;
+        }
+
+        .actions{
+            display:none;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="certificate">
+<div class="watermark">LIBRARY</div>
+
+<div class="content-wrapper">
+
+    <div class="header">
+
+        <img src="{% static 'images/college_logo.png' %}" class="logo" alt="College Logo">
+
+        <div class="college-info">
+            <h1>COLLEGE LIBRARY</h1>
+            <p>Institute of Engineering & Technology</p>
+            <p>Department of Library & Information Services</p>
+            <p>Bhubaneswar, Odisha, India</p>
+        </div>
+
+        <img src="{% static 'images/college_logo.png' %}" class="logo" alt="College Logo">
+
+    </div>
+
+    <div class="certificate-title">
+        <h2>Library No Due Certificate</h2>
+        <div class="subtitle">Official Library Clearance Certificate</div>
+    </div>
+
+    <table class="meta">
+        <tr>
+            <td class="label">Certificate Number</td>
+            <td>{{ certificate.certificate_no }}</td>
+        </tr>
+        <tr>
+            <td class="label">Date of Issue</td>
+            <td>{{ certificate.issue_date }}</td>
+        </tr>
+        <tr>
+            <td class="label">Issued By</td>
+            <td>{{ certificate.issued_by }}</td>
+        </tr>
+    </table>
+
+    <div class="content">
+
+        This is to certify that <span class="student-name">{{ certificate.student_name }}</span>,
+        bearing <strong>Student ID {{ certificate.student_id }}</strong>,
+        from the <strong>{{ certificate.branch }}</strong> branch,
+        has successfully returned all library books, journals, reference materials,
+        and other resources issued from the College Library.
+
+        <br><br>
+
+        According to the official records maintained by the Library,
+        the student has <span class="highlight">NO OUTSTANDING LIBRARY DUES, OVERDUE FINES,
+        OR UNRETURNED BOOKS</span> as on the date of issue of this certificate.
+
+        <br><br>
+
+        Therefore, the above student is hereby granted <strong>Library Clearance</strong>,
+        and this certificate is issued for the purpose of graduation, course completion,
+        migration, placement, higher studies, or any other official requirement of the institution.
+
+        <div class="quote">
+            "Knowledge is the foundation of success. The Library Department wishes the student
+            continued excellence in all future academic and professional endeavors."
+        </div>
+
+    </div>
+
+    <div class="signatures">
+
+        <div class="sign-box">
+            <div class="line"></div>
+            <strong>Library Assistant</strong><br>
+            Department of Library
+        </div>
+
+        <div class="sign-box">
+            <div class="line"></div>
+            <strong>{{ certificate.issued_by }}</strong><br>
+            Librarian
+        </div>
+
+        <div class="sign-box">
+            <div class="line"></div>
+            <strong>Principal / Director</strong><br>
+            College Authority
+        </div>
+
+    </div>
+
+    <div class="verification">
+        <div class="verification-text">
+            This certificate is generated electronically by the College Library Management System.
+            It is valid without a manual signature when verified through the institutional records.
+            <br><br>
+            <strong>Certificate No:</strong> {{ certificate.certificate_no }}
+        </div>
+    </div>
+
+    <div class="footer">
+        © College Library Management System • Official Library Clearance Document
+    </div>
+
+</div>
+
+</div>
+
+<div class="actions">
+    <a href="#" class="btn" onclick="window.print(); return false;">🖨️ Print / Save as PDF</a>
+    <a href="{% url 'no_due_certificate' %}" class="btn secondary">⬅️ Generate Another Certificate</a>
+</div>
+
+</body>
+</html>
