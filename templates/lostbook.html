@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lost Book Charge</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+        url("/static/images/issuebook.jpg")
+        no-repeat center center/cover;
+}
+
+.container{
+    width:95%;
+    max-width:650px;
+    background:rgba(255,255,255,0.96);
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+}
+
+h2{
+    text-align:center;
+    color:#b02a37;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+    font-size:16px;
+}
+
+.warning-box{
+    background:#fff3cd;
+    color:#664d03;
+    padding:16px;
+    border-left:6px solid #ffc107;
+    border-radius:8px;
+    text-align:center;
+    margin-bottom:25px;
+    line-height:1.6;
+}
+
+.details{
+    background:#f8f9fa;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:25px;
+}
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    padding:13px 5px;
+    border-bottom:1px solid #ddd;
+    font-size:17px;
+}
+
+.detail-row:last-child{
+    border-bottom:none;
+}
+
+.label{
+    font-weight:bold;
+    color:#555;
+}
+
+.value{
+    font-weight:bold;
+    color:#333;
+}
+
+.fine{
+    color:#dc3545;
+}
+
+.total-box{
+    background:linear-gradient(135deg, #dc3545, #b02a37);
+    color:white;
+    padding:25px;
+    border-radius:14px;
+    text-align:center;
+    margin-top:20px;
+    box-shadow:0 5px 15px rgba(220,53,69,0.3);
+}
+
+.total-box p{
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.total-box h3{
+    font-size:32px;
+}
+
+.policy{
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    margin-top:20px;
+    line-height:1.6;
+}
+
+.button-container{
+    text-align:center;
+    margin-top:25px;
+}
+
+.btn{
+    display:inline-block;
+    background:#0d6efd;
+    color:white;
+    text-decoration:none;
+    padding:12px 30px;
+    border-radius:8px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#084298;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>⚠️ Lost Book Charge</h2>
+
+    <p class="subtitle">
+        The following amount is payable for the lost book.
+    </p>
+
+    <div class="warning-box">
+        📚 <strong>Lost Book Policy</strong><br>
+        The student must pay <strong>three times the cost of the book</strong>
+        along with any applicable overdue fine.
+    </div>
+
+    <div class="details">
+
+        <div class="detail-row">
+            <span class="label">Book Title</span>
+            <span class="value">{{ book.title }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Book ID</span>
+            <span class="value">{{ book.book_id }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Original Book Cost</span>
+            <span class="value">₹{{ book.price }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Replacement Charge</span>
+            <span class="value">₹{{ book.price }} × 3</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Overdue Fine</span>
+            <span class="value fine">₹{{ overdue_fine }}</span>
+        </div>
+
+    </div>
+
+    <div class="total-box">
+
+        <p>💰 Total Amount Payable</p>
+
+        <h3>₹{{ total_charge }}</h3>
+
+    </div>
+
+    <div class="policy">
+        The total charge includes three times the original book cost
+        and the applicable overdue fine.
+    </div>
+
+    <div class="button-container">
+
+        <a href="{% url 'dashboard' %}" class="btn">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
