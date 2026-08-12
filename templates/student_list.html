@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Student List</title>
+    <style>
+        body{
+            font-family:Arial, sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:40px;
+        }
+        .container{
+            width:80%;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.15);
+        }
+        h2{
+            text-align:center;
+            color:#0d3b66;
+            margin-bottom:25px;
+        }
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+        th, td{
+            padding:14px;
+            border-bottom:1px solid #ddd;
+            text-align:left;
+        }
+        th{
+            background:#0d3b66;
+            color:white;
+        }
+        tr:hover{
+            background:#f9f9f9;
+        }
+        .btn{
+            background:#0d3b66;
+            color:white;
+            padding:8px 14px;
+            text-decoration:none;
+            border-radius:6px;
+            font-weight:bold;
+        }
+        .btn:hover{
+            background:#092847;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+<h2>Library No Due Certificate - Student List</h2>
+
+<table>
+    <tr>
+        <th>Student ID</th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+
+    {% for student in students %}
+    <tr>
+        <td>{{ student.id }}</td>
+        <td>{{ student.username }}</td>
+        <td>{{ student.get_full_name|default:"Not Available" }}</td>
+        <td>
+            <a href="{% url 'generate_no_due_certificate' student.id %}" class="btn">
+                Generate Certificate
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>
